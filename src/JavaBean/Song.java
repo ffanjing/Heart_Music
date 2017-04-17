@@ -1,11 +1,15 @@
 package JavaBean;
 
+import com.alibaba.fastjson.annotation.JSONType;
+
 /**
  * Created by yanzhang2 on 2017/4/15.
  */
+
+@JSONType(orders = {"songID", "songName", "songArtist", "songAlbum", "songURL", "songCover", "songTags", "songCount"})
 public class Song {
     private int songID;
-    private  String songName;
+    private String songName;
     private String songArtist;
     private String songAlbum;
     private String songURL;
