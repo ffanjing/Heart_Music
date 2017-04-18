@@ -7,7 +7,7 @@ public class Constant {
 
     public static final String CHECK_FAIL = "CHECK_FAIL";
     public static final String CHECK_SUCCEED = "CHECK_SUCCEED";
-    public static final String NO_USERID = "NO_USERID";
+    public static final String NO_USERNAME = "NO_USERNAME";
     public static final String NO_USERTAGS = "NO_USERTAGS";
     public static final String USER_NULL = "USER_NULL";
     public static final String DATABASE_ERR = "DATABASE_ERR";

@@ -14,4 +14,13 @@
         <url-pattern>/RecommendServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MayLikeServlet</servlet-name>
+        <servlet-class>MayLikeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MayLikeServlet</servlet-name>
+        <url-pattern>/MayLikeServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

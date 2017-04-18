@@ -18,33 +18,36 @@ import static Constants.Constant.*;
 public class UserUtil {
 
 
-    public static String checkUserID(String userID) {
-        if (userID == null) {
+    public static String checkUserName(String userName) {
+        if (userName == null) {
             return CHECK_FAIL;
         } else
             return CHECK_SUCCEED;
     }
 
 
-    public static String checkUserInfo(Connection conn, String userID) {                   //检查userInfo表中是否存在user记录
+    public static String checkUserInfo(Connection conn, String userName) {                   //检查userInfo表中是否存在user记录
+        Statement st = null;
+        ResultSet set = null;
         try {
-            Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet set = st.executeQuery("select * from tb_userinfo where n_userid = " + Integer.parseInt(userID));
+            st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            set = st.executeQuery("select * from tb_userinfo where v_username ='" + userName +"'");
             set.last();
             if (set.getRow() == 0) {
-                return NO_USERID;
+                return NO_USERNAME;
             } else
                 return CHECK_SUCCEED;
         } catch (Exception e) {
             e.printStackTrace();
+            DataBaseManager.getInstance().close(conn, st, set);
             return DATABASE_ERR;
         }
     }
 
-    public static String getUserTags(Connection conn, String userID) {
+    public static String getUserTags(Connection conn, String userName) {
         try {
             Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet set = st.executeQuery("select v_usertags from tb_userinfo where  n_userid = " + Integer.parseInt(userID));
+            ResultSet set = st.executeQuery("select v_usertags from tb_userinfo where v_username ='" + userName +"'");
             set.next();
             return set.getString(1);
         } catch (SQLException e) {

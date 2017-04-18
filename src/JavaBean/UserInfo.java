@@ -7,17 +7,10 @@ import java.util.HashMap;
  */
 public class UserInfo {
 
-    private String userID;
     private String userName;
     private HashMap<String,Integer> userTags;
 
-    public String getUserID() {
-        return userID;
-    }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
 
     public String getUserName() {
         return userName;
