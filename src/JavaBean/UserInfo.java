@@ -1,6 +1,6 @@
 package JavaBean;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by yanzhang2 on 2017/4/15.
@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class UserInfo {
 
     private String userName;
-    private HashMap<String,Integer> userTags;
+    private Map<String,Integer> userTags;
 
 
 
@@ -20,11 +20,11 @@ public class UserInfo {
         this.userName = userName;
     }
 
-    public HashMap<String, Integer> getUserTags() {
+    public Map<String, Integer> getUserTags() {
         return userTags;
     }
 
-    public void setUserTags(HashMap<String, Integer> userTags) {
+    public void setUserTags(Map<String, Integer> userTags) {
         this.userTags = userTags;
     }
 }

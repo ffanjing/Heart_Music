@@ -1,8 +1,10 @@
 package Utils;
 
 import JavaBean.Tag;
+import JavaBean.UserInfo;
 import com.alibaba.fastjson.JSONObject;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +28,7 @@ public class UserUtil {
     }
 
 
-    public static String checkUserInfo(Connection conn, String userName) {                   //检查userInfo表中是否存在user记录
+    public static UserInfo getUserInfo(Connection conn, String userName , HttpSession session) {                   //检查userInfo表中是否存在user记录
         Statement st = null;
         ResultSet set = null;
         try {
@@ -34,34 +36,29 @@ public class UserUtil {
             set = st.executeQuery("select * from tb_userinfo where v_username ='" + userName +"'");
             set.last();
             if (set.getRow() == 0) {
-                return NO_USERNAME;
-            } else
-                return CHECK_SUCCEED;
+                return null;
+            } else{
+                UserInfo userInfo = createUserInfoFromResultSet(set);
+                session.setAttribute("userInfo",userInfo);
+                return userInfo;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             DataBaseManager.getInstance().close(conn, st, set);
-            return DATABASE_ERR;
+            return null;
         }
     }
 
-    public static String getUserTags(Connection conn, String userName) {
-        try {
-            Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet set = st.executeQuery("select v_usertags from tb_userinfo where v_username ='" + userName +"'");
-            set.next();
-            return set.getString(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return DATABASE_ERR;
-        }
+    public static String getUserTags(Connection conn, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+        return JSONObject.toJSONString(userInfo.getUserTags());
     }
 
 
-    public static Tag getFavouriteTag(String tagDesc) {
-        ArrayList<Tag> tagList = new ArrayList<>();
+    public static Tag getFavouriteTag(HttpSession session) {
         Tag tag = new Tag();
-        JSONObject jsonObject = JSONObject.parseObject(tagDesc);
-        Map<String, Integer> map = sortByValue((Map) jsonObject);
+        UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+        Map<String, Integer> map = sortByValue(userInfo.getUserTags());
         tag.setTagName(map.entrySet().iterator().next().getKey());
         tag.setTagCount(map.entrySet().iterator().next().getValue());
         return tag;
@@ -81,6 +78,23 @@ public class UserUtil {
             result.put(entry.getKey(), entry.getValue());
         }
         return result;
+    }
+
+
+
+    public static UserInfo createUserInfoFromResultSet(ResultSet set) {
+        UserInfo userInfo = new UserInfo();
+        try {
+            userInfo.setUserName(set.getString(2));
+            JSONObject jsonObject = JSONObject.parseObject(set.getString(3));
+            Map<String, Integer> map = (Map) jsonObject;
+            userInfo.setUserTags(map);
+            return userInfo;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 

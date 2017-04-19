@@ -29,10 +29,10 @@ public class MayLikeServlet extends javax.servlet.http.HttpServlet {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("text/html;charset=UTF-8");
         String userName = req.getParameter("userName");
-        mayLikeList = PlayListUtil.getMayLikeList(resp, conn, userName);
+        HttpSession session = req.getSession();
+        mayLikeList = PlayListUtil.getMayLikeList(resp, conn, userName ,session);
         if (null != mayLikeList) {
-            HttpSession session = req.getSession();
-            session.setAttribute("myLikePlayList", mayLikeList);
+            session.setAttribute("mayLikePlayList", mayLikeList);
         }
     }
 }

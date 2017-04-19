@@ -8,15 +8,15 @@
 </head>
 <body>
 
-<h2 id = "hhh" onclick = "connect()">连接数据库</h2>
+<h2 id = "hhh" onclick = "add()">连接数据库</h2>
 
 <script>
-    function connect() {
+    function add() {
         $.ajax({
             type:"post",
-            url:"/RecommendServlet",
+            url:"/PlaySongServlet",
             dataType:"json",
-            data:{method:"getPlayList",type:"1",userID:"1"},
+            data:{type:"1",songPosition:"1"},
             complete:function (data) {
                 var jsonData = eval("(" + data.responseText + ")");
                 if (jsonData.status = "6")
@@ -50,7 +50,15 @@
             type:"post",
             url:"/MayLikeServlet",
             dataType:"json",
-            data:{userName:"zy1"},
+            data:{userName:"zy"},
+            complete:function (data) {
+            }
+        })
+
+        //服务器数据
+        $.ajax({
+            type:"get",
+            url:"/GetAllSongsServlet",
             complete:function (data) {
             }
         })

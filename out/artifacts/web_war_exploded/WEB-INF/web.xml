@@ -23,4 +23,23 @@
         <url-pattern>/MayLikeServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetAllSongsServlet</servlet-name>
+        <servlet-class>GetAllSongsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetAllSongsServlet</servlet-name>
+        <url-pattern>/GetAllSongsServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>PlaySongServlet</servlet-name>
+        <servlet-class>PlaySongServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaySongServlet</servlet-name>
+        <url-pattern>/PlaySongServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

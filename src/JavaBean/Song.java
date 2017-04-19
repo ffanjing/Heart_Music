@@ -1,6 +1,9 @@
 package JavaBean;
 
+import Utils.DataBaseManager;
 import com.alibaba.fastjson.annotation.JSONType;
+
+import java.sql.Connection;
 
 /**
  * Created by yanzhang2 on 2017/4/15.
@@ -80,4 +83,5 @@ public class Song {
     public void setSongCount(int songCount) {
         this.songCount = songCount;
     }
+
 }

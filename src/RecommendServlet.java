@@ -1,6 +1,8 @@
 import JavaBean.Song;
+import JavaBean.UserInfo;
 import Utils.DataBaseManager;
 import Utils.PlayListUtil;
+import Utils.UserUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +31,8 @@ public class RecommendServlet extends javax.servlet.http.HttpServlet {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("text/html;charset=UTF-8");
         String userName = req.getParameter("userName");
-        recommendList = PlayListUtil.getRecommendList(resp, conn, userName);
         HttpSession session = req.getSession();
+        recommendList = PlayListUtil.getRecommendList(resp, conn, userName,session);
         if (null != recommendList) {
             session.setAttribute("recommendPlayList", recommendList);
         }
