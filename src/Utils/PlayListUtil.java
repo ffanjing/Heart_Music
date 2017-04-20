@@ -222,7 +222,7 @@ public class PlayListUtil {
             tagsMap = addUserTags(tagsMap,songTags);
             userInfo.setUserTags(tagsMap);
             String tagDesc = JSONObject.toJSONString(tagsMap);
-            st.execute("update tb_userinfo set v_usertags = '" + tagDesc + "'" + "where v_username = '" + userInfo.getUserName() + "'");
+            st.execute("update tb_member set v_usertags = '" + tagDesc + "'" + "where v_user_name = '" + userInfo.getUserName() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

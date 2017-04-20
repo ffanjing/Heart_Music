@@ -33,7 +33,7 @@ public class UserUtil {
         ResultSet set = null;
         try {
             st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            set = st.executeQuery("select * from tb_userinfo where v_username ='" + userName +"'");
+            set = st.executeQuery("select v_user_name,v_usertags from tb_member where v_user_name ='" + userName +"'");
             set.last();
             if (set.getRow() == 0) {
                 return null;
@@ -85,8 +85,8 @@ public class UserUtil {
     public static UserInfo createUserInfoFromResultSet(ResultSet set) {
         UserInfo userInfo = new UserInfo();
         try {
-            userInfo.setUserName(set.getString(2));
-            JSONObject jsonObject = JSONObject.parseObject(set.getString(3));
+            userInfo.setUserName(set.getString(1));
+            JSONObject jsonObject = JSONObject.parseObject(set.getString(2));
             Map<String, Integer> map = (Map) jsonObject;
             userInfo.setUserTags(map);
             return userInfo;
