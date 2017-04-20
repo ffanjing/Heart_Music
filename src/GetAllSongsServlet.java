@@ -18,19 +18,19 @@ public class GetAllSongsServlet extends javax.servlet.http.HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Song> allSongsList;
-        Connection conn = DataBaseManager.getInstance().getConnection();
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setContentType("text/html;charset=UTF-8");
-        allSongsList = PlayListUtil.getAllSongsPlayList(resp, conn);
-        if (null != allSongsList) {
-            HttpSession session = req.getSession();
-            session.setAttribute("allSongsPlayList", allSongsList);
-        }
+        this.doPost(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doGet(req,resp);
+        ArrayList<Song> allSongsList;
+        Connection conn = DataBaseManager.getInstance().getConnection();
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setContentType("text/html;charset=UTF-8");
+        HttpSession session = req.getSession();
+        allSongsList = PlayListUtil.getAllSongsPlayList(resp, conn);
+        if (null != allSongsList) {
+            session.setAttribute("allSongsPlayList", allSongsList);
+        }
     }
 }
